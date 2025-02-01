@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: pink;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+        video {
+            width: 90%;
+            max-width: 320px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .buttons {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 300px;
+        }
+        button {
+            font-size: 18px;
+            padding: 12px 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out;
+            width: 100%;
+            max-width: 200px;
+        }
+        .yes {
+            background-color: green;
+            color: white;
+        }
+        .no {
+            background-color: red;
+            color: white;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">WILL YOU BE MY VALENTINE?</h1>
+    <video id="video" autoplay loop muted>
+        <source src="rizz.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="buttons">
+        <button class="yes" onclick="sayYes()">YES</button>
+        <button class="no" id="noBtn" onclick="sayNo()">NO</button>
+    </div>
+
+    <script>
+        let noClicks = 0;
+
+        function sayYes() {
+            document.getElementById("question").textContent = "YEHEY GALVIN HAPPY";
+            document.getElementById("video").src = "yehey.mp4";
+            document.getElementById("noBtn").style.display = "none";
+        }
+
+        function sayNo() {
+            let noBtn = document.getElementById("noBtn");
+            let question = document.getElementById("question");
+            let video = document.getElementById("video");
+
+            noClicks++;
+
+            if (noClicks === 1) {
+                question.textContent = "Oops, you misclicked no instead of yes!";
+                video.src = "novid.mp4";
+                moveButton(noBtn);
+            } else if (noClicks === 2) {
+                question.textContent = "Oops, you did it again!";
+                moveButton(noBtn);
+            } else if (noClicks === 3) {
+                question.textContent = "Okay, let's fix this!";
+                noBtn.textContent = "YES";
+                noBtn.classList.remove("no");
+                noBtn.classList.add("yes");
+                noBtn.onclick = sayYes;
+            }
+        }
+
+        function moveButton(button) {
+            let maxX = window.innerWidth - button.clientWidth - 20;
+            let maxY = window.innerHeight - button.clientHeight - 20;
+            let x = Math.random() * maxX;
+            let y = Math.random() * maxY;
+            button.style.transform = `translate(${x}px, ${y}px)`;
+        }
+    </script>
+
+</body>
+</html>
